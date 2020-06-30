@@ -15,19 +15,19 @@ Script to decomission unhealthy instances in a given AWS ElasticBeanstalk enviro
 ## Usage
 
 ```bash
-python decomission.py -h
-Redeploy unhealthy beanstalk instances
+$ python decomission.py -h
+Terminate unhealthy beanstalk instances
 
 Usage:
     decomission.py <environment_id> [options]
 
 Options:
     -h --help       Show this screen
-    -b, --batch N   Batch of instances to redeploy [default: 1]
-    -d, --replace   Replace instances in batches
+    -b, --batch N   Batch of instances to terminate [default: 1]
+    -t, --terminate Terminate instances
 ```
 
-Example:
+Example without terminating the instances (done manually):
 
 ```bash
 AWS_PROFILE=test  python decomission.py e-0000000 -b 1
@@ -50,6 +50,8 @@ Total Ok instances 1, desired 2
 Environment e-0000000 is in good health
 Everything went good, ready to redeploy
 ```
+
+Add _-t_ (or _--terminate_) to leverage instance termination to the script.
 
 ## License
 

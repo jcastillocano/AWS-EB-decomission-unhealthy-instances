@@ -1,12 +1,12 @@
-"""Redeploy unhealthy beanstalk instances
+"""Terminate unhealthy beanstalk instances
 
 Usage:
-    redeploy.py <environment_id> [options]
+    decomission.py <environment_id> [options]
 
 Options:
     -h --help       Show this screen
-    -b, --batch N   Batch of instances to redeploy [default: 1]
-    -d, --replace   Replace instances in batches
+    -b, --batch N   Batch of instances to terminate [default: 1]
+    -t, --terminate Terminate instances
 """
 
 import time
