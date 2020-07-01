@@ -48,7 +48,7 @@ def query_instance_health(client, environment_id):
     response = client.describe_instances_health(EnvironmentId=environment_id, AttributeNames=['HealthStatus'])
     unhealthy_instances += review_instances(response['InstanceHealthList'])
     next_token = get_next_token(response)
-    
+
     while next_token:
         response = client.describe_instances_health(EnvironmentId=environment_id, AttributeNames=['HealthStatus'], NextToken=next_token)
         unhealthy_instances += review_instances(response['InstanceHealthList'])
@@ -65,21 +65,20 @@ def terminate_unhealthy_instances(eb_client, environment_id, unhealthy_instances
     ec2_client = boto3.client('ec2', region_name='us-west-2')
     for unhealthy_instances_batch in [unhealthy_instances[i:i + batch_size] for i in range(0, len(unhealthy_instances), batch_size)]:
         if replace:
-            ec2_client.terminate_instances(instance_ids=unhealthy_intsances_batch)
+            ec2_client.terminate_instances(instance_ids=unhealthy_instances_batch)
         else:
-            print('Please, terminate %s instances' % unhealthy_instances_batch) 
+            print('Please, terminate %s instances' % unhealthy_instances_batch)
 
         time.sleep(60)
         retry_total = 0
         while instance_states['Ok'] != total_ok + len(unhealthy_instances_batch):
-            print('Total Ok instances %d, desired %s' % ( instance_states['Ok'], total_ok  + len(unhealthy_instances_batch)))
+            print('Total Ok instances %d, desired %s' % (instance_states['Ok'], total_ok + len(unhealthy_instances_batch)))
             if retry_total > MAX_ENV_HEALTH_RETRIES:
                 Exception('Recovered instances failed, please check env %s' % environment_id)
             time.sleep(30)
             retry_total += 1
             instance_states = environment_instance_health(eb_client, environment_id)
         total_ok += len(unhealthy_instances_batch)
-
 
     retry_total = 0
     while not environment_health(eb_client, environment_id):
@@ -97,7 +96,7 @@ def main(environment_id, batch_size, replace=False):
         print('Cluster %s is not healthy, running recovery' % environment_id)
         unhealthy_instances = query_instance_health(eb_client, environment_id)
         terminate_unhealthy_instances(eb_client, environment_id, unhealthy_instances, batch_size, replace)
-    
+
 
 if __name__ == '__main__':
     args = docopt(__doc__, version='Redeploy 0.1')
