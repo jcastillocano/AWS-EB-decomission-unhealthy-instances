@@ -1,7 +1,7 @@
 """Terminate unhealthy beanstalk instances
 
 Usage:
-    decommission.py <environment_id> [options]
+    decomission.py <environment_id> [options]
 
 Options:
     -h --help       Show this screen

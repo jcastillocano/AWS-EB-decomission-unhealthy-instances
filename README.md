@@ -1,6 +1,6 @@
-# AWS-EB-decomission-unhealthyd-instances
+# AWS-EB-decommission-unhealthyd-instances
 
-Script to decomission unhealthy instances in a given AWS ElasticBeanstalk environment
+Script to decommission unhealthy instances in a given AWS ElasticBeanstalk environment
 
 ## Requirements
 
@@ -15,11 +15,11 @@ Script to decomission unhealthy instances in a given AWS ElasticBeanstalk enviro
 ## Usage
 
 ```bash
-$ python decomission.py -h
+$ python decommission.py -h
 Terminate unhealthy beanstalk instances
 
 Usage:
-    decomission.py <environment_id> [options]
+    decommission.py <environment_id> [options]
 
 Options:
     -h --help       Show this screen
@@ -30,7 +30,7 @@ Options:
 Example without terminating the instances (done manually):
 
 ```bash
-AWS_PROFILE=test  python decomission.py e-0000000 -b 1
+AWS_PROFILE=test  python decommission.py e-0000000 -b 1
 Cluster e-0000000 is not healthy, running recovery
 Instance i-1234 is in status Severe
 Instance i-5678 is in status Severe
